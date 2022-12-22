@@ -34,18 +34,6 @@ md"#### Block or stacked vectors."
 # ╔═╡ 0afc1b4a-8baf-4ac7-9816-2216a8de5456
 md"To construct a block vector in Julia, you can use vcat (vertical concatenate) or the semicolon (;) operator."
 
-# ╔═╡ da769258-a7e1-4850-b62f-9a15e5d2de52
-begin
-	a=[1,-2];
-	b=[1,1,0];
-end
-
-# ╔═╡ 8a9256fe-5988-4580-98fd-94378d62f4a3
-c = [a;b]
-
-# ╔═╡ 960c69e8-5dc9-422b-bc85-c21722c7f246
-vcat(a,b)
-
 # ╔═╡ 547fdaf8-e68e-4384-9002-bfe01d327d4a
 md"#### Subvectors and slicing."
 
@@ -57,36 +45,6 @@ x = [ 9, 4, 3, 0, 5 ]
 
 # ╔═╡ 0daf7d65-000c-4224-b419-e56be4045284
 md"#### Vector of first differences."
-
-# ╔═╡ 661de6fb-38c3-4ae4-aee7-1e13e3f8ec5f
-x = [ 1, 0, 0, -2, 2 ]
-
-# ╔═╡ 797a5e22-55f4-440c-9df0-f93440656b2f
-length(x)
-
-# ╔═╡ ef03d6f9-14c7-44a8-912c-a42374b6b7c7
-y = x[2:4]
-
-# ╔═╡ 574157e6-3735-4fc5-8788-0728a6dfc6cb
-length(y)
-
-# ╔═╡ 3ac9c8a7-b0f6-43fc-976f-7e596c42e56c
-typeof(y)
-
-# ╔═╡ b81999f1-2380-4f80-9ac4-737ea1e35a47
-x==y
-
-# ╔═╡ 416986cf-7d35-46ab-b917-6123aecb1030
-x[4:5] = [ -2, -3 ];  # Re-assign the 4 and 5 entries of x
-
-# ╔═╡ 2cc74249-10cf-48fe-ad6c-cf97aaf43119
-x
-
-# ╔═╡ 69005a22-5c2b-4eed-9fdc-8b76df1f627a
-d = x[2:end] - x[1:end-1]
-
-# ╔═╡ 44201a1d-fe26-43f3-8f28-37ac051a938f
-d
 
 # ╔═╡ c9819aad-1e34-4d10-9ad3-b5cbf5ecf6bd
 md"**Zero Vectors**"
@@ -138,22 +96,189 @@ plot(temps, marker = :circle, legend = false, grid = false)
 savefig("../../figs/temperature.svg")
 
 # ╔═╡ 768b8189-5269-4ffd-9365-b677fe14617d
+md"**Vector Addition**"
 
+# ╔═╡ de62b9be-a520-4fb6-b759-d467f2381519
+[ 0, 7, 3 ] + [ 1, 2, 0 ]
+
+# ╔═╡ dde7b5ca-de7d-40ce-9847-1a59fe853bea
+[ 1, 9 ] - [ 1, 1]
+
+# ╔═╡ cd8898f2-f0d8-411f-be0e-80c790343c96
+md"**Scalar-vector multiplication**"
+
+# ╔═╡ 0966a080-9576-43d5-b7d7-98904e10a407
+md"**Elementwise operations.**"
+
+# ╔═╡ a4f0c689-a09d-4897-a571-f4e01560c284
+md"As an example of elementwise division, let’s find the 3-vector of asset returns r
+from the (vectors of) initial and final prices of assets"
+
+# ╔═╡ cd3cbffe-188e-45a9-8fa4-fee945728dbd
+p_initial = [ 22.15, 89.32, 56.77 ];
+
+# ╔═╡ be892646-d2cb-4a42-8985-eb7ed0b0c0e0
+p_final = [ 23.05, 87.32, 57.13 ];
+
+# ╔═╡ 3dddef30-5f07-459f-a9f7-017e117fbcc4
+r = (p_final - p_initial) ./ p_initial
+
+# ╔═╡ a1f68f2d-434d-4d63-a898-5e8c86390811
+md"**Elementwise operations with a scalar**"
+
+# ╔═╡ 5e40aecb-2aea-44a3-a004-248b23bfe162
+w = [1,2,2];
+
+# ╔═╡ fb8248fe-c3bd-4b17-920c-f7d4b6d3bef1
+z = [1,2,3];
+
+# ╔═╡ c2c90986-952d-4c28-815b-163d7728d4ed
+w == z
+
+# ╔═╡ 91be0341-180a-421c-8dbe-2b23249e22b0
+w .== z
+
+# ╔═╡ ba4109e5-aa19-4497-adcf-0c41e2d450e1
+md"For example x[abs.(x) .> 1] gives the subvector of x consisting of the entries larger than one in magnitude"
+
+# ╔═╡ 51dbddc6-e193-4c27-bf2d-cb841092bbe2
+md"Dot notation works with assignment too, allowing you to assign multiple entries
+of a vector to a scalar value. For example:"
+
+# ╔═╡ 2e1e1a64-e30f-4d31-b9e0-7965ebf51256
+md"**Linear combination.**"
+
+# ╔═╡ 960c69e8-5dc9-422b-bc85-c21722c7f246
+vcat(a,b)
+
+# ╔═╡ a201af69-597c-4730-a886-bcd3ff57908d
+alpha = -0.5; 
+
+# ╔═╡ df6c1d02-2011-4802-baaa-758349c373dd
+beta = 1.5;
+
+# ╔═╡ 436600b4-ddcd-401c-87f7-c89ff33a7719
+md"### Inner product"
+
+# ╔═╡ 797a5e22-55f4-440c-9df0-f93440656b2f
+length(x)
+
+# ╔═╡ 416986cf-7d35-46ab-b917-6123aecb1030
+x[4:5] = [ -2, -3 ];  # Re-assign the 4 and 5 entries of x
+
+# ╔═╡ 2cc74249-10cf-48fe-ad6c-cf97aaf43119
+x
+
+# ╔═╡ 69005a22-5c2b-4eed-9fdc-8b76df1f627a
+d = x[2:end] - x[1:end-1]
+
+# ╔═╡ 44201a1d-fe26-43f3-8f28-37ac051a938f
+d
+
+# ╔═╡ 6ce18034-3c52-413c-99f1-c42bcf397a72
+2.2 * x
+
+# ╔═╡ 582eb54a-856e-48a3-aeec-099411b5f80f
+x[abs.(x) .> 1]
+
+# ╔═╡ 32fbb578-c26b-4fb6-b8f4-ca85e0d2b332
+x[1:2] = [-1,1];
+
+# ╔═╡ b71f1a06-8013-43d1-8cec-e908de270095
+x
+
+# ╔═╡ f1ac7403-9aec-429e-827a-c2b2325cec51
+x[2:3] .= 1.3;
+
+# ╔═╡ 37b71b2b-f274-4946-a20b-6827d450d78d
+x
+
+# ╔═╡ 574157e6-3735-4fc5-8788-0728a6dfc6cb
+length(y)
+
+# ╔═╡ 3ac9c8a7-b0f6-43fc-976f-7e596c42e56c
+typeof(y)
+
+# ╔═╡ b81999f1-2380-4f80-9ac4-737ea1e35a47
+x==y
+
+# ╔═╡ d85d37be-aa5f-4cf7-bfd5-c1e322d92a87
+x'*y
+
+# ╔═╡ 6ba89dcc-ea76-40f4-ba8a-f4e2dd7d0999
+
+
+# ╔═╡ 13a9fd91-7b45-4912-bd25-7912a404a402
+begin
+a = [ 1, 2 ]; 
+b = [ 3, 4 ];
+end
+
+# ╔═╡ bec0cf23-d0f7-46bd-8d5f-ae0c81ef1ab0
+x = [ -1, 2, 2 ];
+
+# ╔═╡ 9504ae7c-b7a8-4a7d-a328-12ec37fd4f60
+# ╠═╡ disabled = true
+#=╠═╡
+x = rand(4)
+  ╠═╡ =#
+
+# ╔═╡ ef03d6f9-14c7-44a8-912c-a42374b6b7c7
+# ╠═╡ disabled = true
+#=╠═╡
+y = x[2:4]
+  ╠═╡ =#
+
+# ╔═╡ da769258-a7e1-4850-b62f-9a15e5d2de52
+# ╠═╡ disabled = true
+#=╠═╡
+begin
+	a=[1,-2];
+	b=[1,1,0];
+end
+  ╠═╡ =#
+
+# ╔═╡ f8fe8a98-f433-48f0-afd9-e854777c1706
+# ╠═╡ disabled = true
+#=╠═╡
+x = [ 0, 2, -1 ];
+  ╠═╡ =#
+
+# ╔═╡ 71ea1b74-52f5-485d-badc-eb8ccfe0ab6f
+c = alpha*a + beta*b
+
+# ╔═╡ 3a54148d-5da4-4f85-9735-ed3035cfd423
+y = [ 1, 0, -3 ];
+
+# ╔═╡ 661de6fb-38c3-4ae4-aee7-1e13e3f8ec5f
+# ╠═╡ disabled = true
+#=╠═╡
+x = [ 1, 0, 0, -2, 2 ]
+  ╠═╡ =#
+
+# ╔═╡ 8a9256fe-5988-4580-98fd-94378d62f4a3
+# ╠═╡ disabled = true
+#=╠═╡
+c = [a;b]
+  ╠═╡ =#
+
+# ╔═╡ 8347c8eb-75e1-49ed-a3a6-84b93ebf6699
+# ╠═╡ disabled = true
+#=╠═╡
+x = [1.1, .5, -1.5, -0.3]
+  ╠═╡ =#
 
 # ╔═╡ 00000000-0000-0000-0000-000000000001
 PLUTO_PROJECT_TOML_CONTENTS = """
 [deps]
 Plots = "91a5bcdd-55d7-5caf-9e0b-520d859cae80"
-
-[compat]
-Plots = "~1.38.0"
 """
 
 # ╔═╡ 00000000-0000-0000-0000-000000000002
 PLUTO_MANIFEST_TOML_CONTENTS = """
 # This file is machine-generated - editing it directly is not advised
 
-julia_version = "1.8.3"
+julia_version = "1.8.2"
 manifest_format = "2.0"
 project_hash = "39d0d5866236472d6bc1a58c4e663ea8a2a2e057"
 
@@ -222,9 +347,9 @@ version = "0.9.9"
 
 [[deps.Colors]]
 deps = ["ColorTypes", "FixedPointNumbers", "Reexport"]
-git-tree-sha1 = "fc08e5930ee9a4e03f84bfb5211cb54e7769758a"
+git-tree-sha1 = "417b0ed7b8b838aa6ca0a87aadf1bb9eb111ce40"
 uuid = "5ae59095-9a9b-59fe-a467-6f913c188581"
-version = "0.12.10"
+version = "0.12.8"
 
 [[deps.Compat]]
 deps = ["Dates", "LinearAlgebra", "UUIDs"]
@@ -243,9 +368,9 @@ uuid = "d38c429a-6771-53c6-b99e-75d170b6e991"
 version = "0.6.2"
 
 [[deps.DataAPI]]
-git-tree-sha1 = "e8119c1a33d267e16108be441a287a6981ba1630"
+git-tree-sha1 = "e08915633fcb3ea83bf9d6126292e5bc5c739922"
 uuid = "9a962f9c-6df0-11e9-0e5d-c546b8b5ee8a"
-version = "1.14.0"
+version = "1.13.0"
 
 [[deps.DataStructures]]
 deps = ["Compat", "InteractiveUtils", "OrderedCollections"]
@@ -263,9 +388,9 @@ uuid = "8bb1440f-4735-579b-a4ab-409b98df4dab"
 
 [[deps.DocStringExtensions]]
 deps = ["LibGit2"]
-git-tree-sha1 = "2fb1e02f2b635d0845df5d7c167fec4dd739b00d"
+git-tree-sha1 = "c36550cb29cbe373e95b3f40486b9a4148f89ffd"
 uuid = "ffbed154-4ef7-542d-bbb7-c09d3a79fcae"
-version = "0.9.3"
+version = "0.9.2"
 
 [[deps.Downloads]]
 deps = ["ArgTools", "FileWatching", "LibCURL", "NetworkOptions"]
@@ -349,9 +474,9 @@ version = "0.21.0+0"
 
 [[deps.Glib_jll]]
 deps = ["Artifacts", "Gettext_jll", "JLLWrappers", "Libdl", "Libffi_jll", "Libiconv_jll", "Libmount_jll", "PCRE2_jll", "Pkg", "Zlib_jll"]
-git-tree-sha1 = "d3b3624125c1474292d0d8ed0f65554ac37ddb23"
+git-tree-sha1 = "fb83fbe02fe57f2c068013aa94bcdf6760d3a7a7"
 uuid = "7746bdde-850d-59dc-9ae8-88ece973131d"
-version = "2.74.0+2"
+version = "2.74.0+1"
 
 [[deps.Graphite2_jll]]
 deps = ["Artifacts", "JLLWrappers", "Libdl", "Pkg"]
@@ -366,9 +491,9 @@ version = "1.0.2"
 
 [[deps.HTTP]]
 deps = ["Base64", "CodecZlib", "Dates", "IniFile", "Logging", "LoggingExtras", "MbedTLS", "NetworkOptions", "OpenSSL", "Random", "SimpleBufferStream", "Sockets", "URIs", "UUIDs"]
-git-tree-sha1 = "2e13c9956c82f5ae8cbdb8335327e63badb8c4ff"
+git-tree-sha1 = "e1acc37ed078d99a714ed8376446f92a5535ca65"
 uuid = "cd3eb016-35fb-5094-929b-558a96fad6f3"
-version = "1.6.2"
+version = "1.5.5"
 
 [[deps.HarfBuzz_jll]]
 deps = ["Artifacts", "Cairo_jll", "Fontconfig_jll", "FreeType2_jll", "Glib_jll", "Graphite2_jll", "JLLWrappers", "Libdl", "Libffi_jll", "Pkg"]
@@ -497,9 +622,9 @@ version = "1.42.0+0"
 
 [[deps.Libiconv_jll]]
 deps = ["Artifacts", "JLLWrappers", "Libdl", "Pkg"]
-git-tree-sha1 = "c7cb1f5d892775ba13767a87c7ada0b980ea0a71"
+git-tree-sha1 = "42b62845d70a619f063a7da093d995ec8e15e778"
 uuid = "94ce4f54-9a6c-5748-9c1c-f9c7231a4531"
-version = "1.16.1+2"
+version = "1.16.1+1"
 
 [[deps.Libmount_jll]]
 deps = ["Artifacts", "JLLWrappers", "Libdl", "Pkg"]
@@ -639,9 +764,9 @@ version = "10.40.0+0"
 
 [[deps.Parsers]]
 deps = ["Dates", "SnoopPrecompile"]
-git-tree-sha1 = "6466e524967496866901a78fca3f2e9ea445a559"
+git-tree-sha1 = "b64719e8b4504983c7fca6cc9db3ebc8acc2a4d6"
 uuid = "69de0a69-1ddd-5017-9359-2bf0b02dc9f0"
-version = "2.5.2"
+version = "2.5.1"
 
 [[deps.Pipe]]
 git-tree-sha1 = "6842804e7867b115ca9de748a0cf6b364523c16d"
@@ -673,9 +798,9 @@ version = "1.3.2"
 
 [[deps.Plots]]
 deps = ["Base64", "Contour", "Dates", "Downloads", "FFMPEG", "FixedPointNumbers", "GR", "JLFzf", "JSON", "LaTeXStrings", "Latexify", "LinearAlgebra", "Measures", "NaNMath", "Pkg", "PlotThemes", "PlotUtils", "Preferences", "Printf", "REPL", "Random", "RecipesBase", "RecipesPipeline", "Reexport", "RelocatableFolders", "Requires", "Scratch", "Showoff", "SnoopPrecompile", "SparseArrays", "Statistics", "StatsBase", "UUIDs", "UnicodeFun", "Unzip"]
-git-tree-sha1 = "513084afca53c9af3491c94224997768b9af37e8"
+git-tree-sha1 = "7c5d624a2cb080c2bf41dc5da8fbb837c427048a"
 uuid = "91a5bcdd-55d7-5caf-9e0b-520d859cae80"
-version = "1.38.0"
+version = "1.37.0"
 
 [[deps.Preferences]]
 deps = ["TOML"]
@@ -1114,6 +1239,40 @@ version = "1.4.1+0"
 # ╠═0667ae4a-e30f-4ea6-b3ea-e57f85df1321
 # ╠═21b8dba2-c426-403b-8e7d-9d27f073c41d
 # ╠═8df013ab-dad3-40ed-a4be-9d9d85f05993
-# ╠═768b8189-5269-4ffd-9365-b677fe14617d
+# ╟─768b8189-5269-4ffd-9365-b677fe14617d
+# ╠═de62b9be-a520-4fb6-b759-d467f2381519
+# ╠═dde7b5ca-de7d-40ce-9847-1a59fe853bea
+# ╟─cd8898f2-f0d8-411f-be0e-80c790343c96
+# ╠═f8fe8a98-f433-48f0-afd9-e854777c1706
+# ╠═6ce18034-3c52-413c-99f1-c42bcf397a72
+# ╟─0966a080-9576-43d5-b7d7-98904e10a407
+# ╟─a4f0c689-a09d-4897-a571-f4e01560c284
+# ╠═cd3cbffe-188e-45a9-8fa4-fee945728dbd
+# ╠═be892646-d2cb-4a42-8985-eb7ed0b0c0e0
+# ╠═3dddef30-5f07-459f-a9f7-017e117fbcc4
+# ╟─a1f68f2d-434d-4d63-a898-5e8c86390811
+# ╠═5e40aecb-2aea-44a3-a004-248b23bfe162
+# ╠═fb8248fe-c3bd-4b17-920c-f7d4b6d3bef1
+# ╠═c2c90986-952d-4c28-815b-163d7728d4ed
+# ╠═91be0341-180a-421c-8dbe-2b23249e22b0
+# ╠═8347c8eb-75e1-49ed-a3a6-84b93ebf6699
+# ╟─ba4109e5-aa19-4497-adcf-0c41e2d450e1
+# ╠═582eb54a-856e-48a3-aeec-099411b5f80f
+# ╟─51dbddc6-e193-4c27-bf2d-cb841092bbe2
+# ╠═9504ae7c-b7a8-4a7d-a328-12ec37fd4f60
+# ╠═32fbb578-c26b-4fb6-b8f4-ca85e0d2b332
+# ╠═b71f1a06-8013-43d1-8cec-e908de270095
+# ╠═f1ac7403-9aec-429e-827a-c2b2325cec51
+# ╠═37b71b2b-f274-4946-a20b-6827d450d78d
+# ╟─2e1e1a64-e30f-4d31-b9e0-7965ebf51256
+# ╠═13a9fd91-7b45-4912-bd25-7912a404a402
+# ╠═a201af69-597c-4730-a886-bcd3ff57908d
+# ╠═df6c1d02-2011-4802-baaa-758349c373dd
+# ╠═71ea1b74-52f5-485d-badc-eb8ccfe0ab6f
+# ╟─436600b4-ddcd-401c-87f7-c89ff33a7719
+# ╠═bec0cf23-d0f7-46bd-8d5f-ae0c81ef1ab0
+# ╠═3a54148d-5da4-4f85-9735-ed3035cfd423
+# ╠═d85d37be-aa5f-4cf7-bfd5-c1e322d92a87
+# ╠═6ba89dcc-ea76-40f4-ba8a-f4e2dd7d0999
 # ╟─00000000-0000-0000-0000-000000000001
 # ╟─00000000-0000-0000-0000-000000000002
