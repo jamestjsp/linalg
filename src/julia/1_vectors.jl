@@ -154,3 +154,41 @@ x = [ 1, 0, 0, -2, 2 ]
 
 c = [a;b]
 x = [1.1, .5, -1.5, -0.3]
+# Net present value. As an example, the following code snippet finds the net
+# present value (NPV) of a cash flow vector c, with per-period interest rate r.
+c = [ 0.1, 0.1, 0.1, 1.1 ]; # Cash flow vector
+n = length(c);
+r = 0.05; # 5% per-period interest rate
+d = (1+r) .^ -(0:n-1)
+NPV = c'*d
+
+# Total school-age population. Suppose that the 100-vector x gives the age distribution
+# of some population, with xi the number of people of age i - 1, for
+# i = 1; : : : ; 100. The total number of people with age between 5 and 18 (inclusive)
+# is given by x6 + x7 + ... + x18 + x19
+s = [zeros(5); ones(14); zeros(81)]
+
+# Complexity of vector computations
+# Floating point operations
+a = rand(); b = rand();
+lhs = (a+b) * (a-b)
+rhs = a^2 - b^2
+lhs - rhs
+# Complexity
+a = randn(10^5); b = randn(10^5);
+@time a'*b
+
+c = randn(10^6); d = randn(10^6);
+@time c'*d	
+
+# Sparse vectors
+using SparseArrays
+a = sparsevec( [ 123456, 123457 ], [ 1.0, -1.0 ], 10^6 )
+length(a)
+nnz(a)
+b = randn(10^6);
+@time 2*a; # Computed efficiently!
+@time 2*b;
+@time a'*b;
+@time b'*b;
+@time c = a + b;
